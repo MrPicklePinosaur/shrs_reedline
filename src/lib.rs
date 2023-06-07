@@ -6,7 +6,12 @@ pub struct Reedline {
 }
 
 impl Reedline {
-    pub fn new(reedline: reedline::Reedline, prompt: impl reedline::Prompt + 'static) -> Self { Self { reedline, prompt: Box::new(prompt) } }
+    pub fn new(reedline: reedline::Reedline, prompt: impl reedline::Prompt + 'static) -> Self {
+        Self {
+            reedline,
+            prompt: Box::new(prompt),
+        }
+    }
 }
 
 impl Readline for Reedline {
@@ -14,10 +19,8 @@ impl Readline for Reedline {
         use reedline::Signal;
         match self.reedline.read_line(&*self.prompt) {
             Ok(Signal::Success(inner)) => inner,
-            Ok(_) => { String::new() }
-            Err(_) => { String::new() }
+            Ok(_) => String::new(),
+            Err(_) => String::new(),
         }
     }
 }
-
-
